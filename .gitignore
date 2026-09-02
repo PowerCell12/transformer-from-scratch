@@ -1,12 +1,13 @@
 /data
-/ml_session_context.md
 /fil-result/
+/reference/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
 *$py.class
 ./__pycache__
+.vscode
 
 # C extensions
 *.so

@@ -18,6 +18,7 @@ services:
     
   minio-init:
     image: minio/mc
+    container_name: transformer-from-scratch-minio-init
     entrypoint: >
       /bin/sh -c "
       mc alias set local http://minio:9000 $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD}; 
