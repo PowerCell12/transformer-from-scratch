@@ -38,7 +38,7 @@ def set_queue(q):
     global shared_queue
     shared_queue = q
 
-def write_data(file_path):
+def write_data(shared_queue, file_path):
 
     with open(file_path, mode="w", encoding="utf-8") as write_to_file:
 
@@ -111,18 +111,23 @@ if __name__ == "__main__":
             with open(f"{pathToMainDirectory}/data/filtered_data/{file}", mode="r", encoding="utf-8") as opened_file:
                 batched_file = batched(opened_file, n=10_000)
 
-                with ProcessPoolExecutor(max_workers=4, initializer=set_queue, initargs=(shared_queue,)) as executor:
-
-                    write_to_file = executor.submit(
-                        write_data, 
-                        file_path=f"{pathToMainDirectory}/data/cleaned_data/{file}"
+                write_to_file = multiprocessing.Process(
+                        target=write_data, 
+                        args=(shared_queue, f"{pathToMainDirectory}/data/cleaned_data/{file}",)
                     )
+
+                write_to_file.start()
+
+                with ProcessPoolExecutor(max_workers=4, initializer=set_queue, initargs=(shared_queue,)) as executor:
 
                     results = executor.map(clean, batched_file)  
 
                     for result in results:
                         ...
 
-                    shared_queue.put(None)  
+                shared_queue.put(None)  
 
-                    write_to_file.result()
+                write_to_file.join()
+
+                if write_to_file.exitcode != 0:
+                    raise RuntimeError(f"Writer died, exitcode={write_to_file.exitcode}")
