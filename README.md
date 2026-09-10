@@ -32,20 +32,20 @@ The goal was to understand the transformer at the level of its primitives rather
 
 ## Repository Structure
 
-The project is organized as a two-pass progression. Each component exists in a from-scratch NumPy form (`numpy_from_scratch/`) and a PyTorch form (`pytorch_components/`); the full trainable model lives at the repository root.
+The project is organized as a two-pass progression. Each component exists in a from-scratch NumPy form (`transformer_components_numpy/`) and a PyTorch form (`transformer_components_pytorch/`); the full trainable model lives at the repository root.
 
-| Component | NumPy — `numpy_from_scratch/` | PyTorch — `pytorch_components/` |
+| Component | NumPy — `transformer_components_numpy/` | PyTorch — `transformer_components_pytorch/` |
 |---|---|---|
 | Softmax | `Softmax.py` | — |
 | Scaled dot-product attention | `single_head_attention.py` | — |
-| Multi-head attention | `multi_head_attention.ipynb` | `multi_head_attention_in_pytorch.ipynb` |
-| Positional encoding | `positional_encoding.ipynb` | `positional_encoding_in_pytorch.ipynb` |
-| Feed-forward network | `feed_forward.ipynb` | `feed_forward_in_pytorch.ipynb` |
-| Layer normalization | `layer_norm.ipynb` | `layer_norm_in_pytorch.ipynb` |
-| Transformer block | `transformer_block.ipynb` | `transformer_block_in_pytorch.ipynb` |
-| **Full trainable model** | — | **`full_model_transformer_in_pytorch.ipynb`** (root) |
+| Multi-head attention | `multi_head_attention.ipynb` | `multi_head_attention.ipynb` |
+| Positional encoding | `positional_encoding.ipynb` | `positional_encoding.ipynb` |
+| Feed-forward network | `feed_forward.ipynb` | `feed_forward.ipynb` |
+| Layer normalization | `layer_norm.ipynb` | `layer_norm.ipynb` |
+| Transformer block | `transformer_block.ipynb` | `transformer_block.ipynb` |
+| **Full trainable model** | — | **`full_transformer_model_in_pytorch.ipynb`** (root) |
 
-The capstone is [`full_model_transformer_in_pytorch.ipynb`](full_model_transformer_in_pytorch.ipynb), which wires the components together, builds a character-level tokenizer, trains the model, and generates text.
+The capstone is [`full_transformer_model_in_pytorch.ipynb`](full_transformer_model_in_pytorch.ipynb), which wires the components together, builds a character-level tokenizer, trains the model, and generates text.
 
 ## Architecture
 
@@ -100,7 +100,7 @@ Generation is autoregressive with top-k sampling (k = 10): the final-position lo
 ```bash
 pip install torch
 # place one or more .txt files in ./data
-jupyter notebook full_model_transformer_in_pytorch.ipynb
+jupyter notebook full_transformer_model_in_pytorch.ipynb
 ```
 
 Run the cells top to bottom: build the vocabulary, batch the data, train, and generate.
